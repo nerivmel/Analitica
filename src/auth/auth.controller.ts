@@ -1,11 +1,11 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
+  Get,
   Put,
-  Param,
   Delete,
+  Param,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
@@ -21,7 +21,7 @@ export class AuthController {
     return this.authService.create(createAuthDto);
   }
 
-  @Post()
+  @Post('/login')
   login(@Body() loginAuthDto: LoginAuthDto) {
     return this.authService.login(loginAuthDto);
   }

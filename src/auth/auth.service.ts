@@ -5,7 +5,6 @@ import { LoginAuthDto } from './dto/login-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './models/user.model';
-import { Sequelize } from 'sequelize';
 
 @Injectable()
 export class AuthService {
@@ -19,8 +18,17 @@ export class AuthService {
     const user = await this.userModel.findOne({
       where: { identification },
     });
+    const email = await this.userModel.findOne({
+      where: { email: createAuthDto.email },
+    });
     if (user)
-      throw new HttpException('El usuario ya existe', HttpStatus.BAD_REQUEST);
+      throw new HttpException('El usuario ya existe', HttpStatus.CONFLICT);
+
+    if (email)
+      throw new HttpException(
+        'El email ingresado ya se encuentra registrado',
+        HttpStatus.CONFLICT,
+      );
 
     const plainToHash = await hash(password, 10);
     createAuthDto = { ...createAuthDto, password: plainToHash };
@@ -31,24 +39,43 @@ export class AuthService {
       password: createAuthDto.password,
       email: createAuthDto.email,
     };
-
-    this.userModel
-      .create(newUser)
-      .then(() => {
-        return { meessage: 'Usuario creado correctamente' };
-      })
-      .catch((error) => {
-        console.log(error);
-        throw new HttpException(error.meessage, error.statusCode);
-      });
+    try {
+      await this.userModel.create(newUser);
+      return { message: 'Usuario creado correctamente' };
+    } catch (error) {
+      console.log(error);
+      if (error.errors.length > 0) {
+        throw new HttpException(
+          error.errors[0].message,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      throw new HttpException(error.message, HttpStatus.CONFLICT);
+    }
   }
 
   async login(loginAuthDto: LoginAuthDto) {
-    return 'Logeado';
+    const { identification, password } = loginAuthDto;
+    const user = await this.userModel.findOne({
+      where: { identification },
+    });
+    if (!user)
+      throw new HttpException('Usuario no existe', HttpStatus.NOT_FOUND);
+
+    const isMatch = await compare(password, user.password);
+    if (!isMatch)
+      throw new HttpException('Contraseña incorrecta', HttpStatus.CONFLICT);
+
+    const data = {
+      identification: user.identification,
+      message: 'Bienvenido',
+      result: 'success',
+    };
+    return data;
   }
 
-  findAll() {
-    return this.userModel.findAll();
+  async findAll() {
+    return await this.userModel.findAll();
   }
 
   findOne(id: number) {
