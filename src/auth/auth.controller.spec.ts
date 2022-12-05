@@ -16,7 +16,6 @@ const testRegister = {
 };
 
 const registerSucces = { message: 'Usuario creado correctamente' };
-const registerFail = { message: 'El usuario ya existe', status: 409 };
 
 const loginSucces = {
   identification: '1037663140',
@@ -32,6 +31,7 @@ const remove = { message: 'Usuario eliminado correctamente' };
 
 describe('AuthController', () => {
   let controller: AuthController;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let service: AuthService;
 
   beforeEach(async () => {
@@ -43,9 +43,7 @@ describe('AuthController', () => {
           useValue: {
             findAll: jest.fn(() => [testRegister]),
             create: jest.fn(() => registerSucces),
-            createFail: jest.fn(() => registerFail),
             login: jest.fn(() => loginSucces),
-            loginFail: jest.fn(() => loginFail),
             remove: jest.fn(() => remove),
           },
         },
@@ -73,8 +71,10 @@ describe('AuthController', () => {
     it('should login a user and return error when the credentials are incorrect', async () => {
       try {
         const result = await controller.login(testLogin);
+        console.log(result);
         expect(result).toEqual(loginSucces);
       } catch (error) {
+        console.log(error);
         expect(error).toEqual(loginFail);
         done();
       }
@@ -86,8 +86,10 @@ describe('AuthController', () => {
           identification: '1037663148',
           password: '12345',
         });
+        console.log(result);
         expect(result).toEqual(loginSucces);
       } catch (error) {
+        console.log(error);
         expect(error).toEqual(loginFail);
         done();
       }
