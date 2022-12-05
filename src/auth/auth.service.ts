@@ -59,12 +59,16 @@ export class AuthService {
     const user = await this.userModel.findOne({
       where: { identification },
     });
-    if (!user)
-      throw new HttpException('Usuario no existe', HttpStatus.NOT_FOUND);
+
+    const error = {
+      message: 'Usuario o contraseña incorrectos',
+      result: 'fail',
+    };
+    if (!user) throw new HttpException(error, HttpStatus.NOT_FOUND);
 
     const isMatch = await compare(password, user.password);
-    if (!isMatch)
-      throw new HttpException('Contraseña incorrecta', HttpStatus.CONFLICT);
+
+    if (!isMatch) throw new HttpException(error, HttpStatus.CONFLICT);
 
     const data = {
       identification: user.identification,

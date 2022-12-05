@@ -1,9 +1,34 @@
-import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Sequelize } from 'sequelize';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { User } from './models/user.model';
+
+const testLogin = {
+  identification: '1037663140',
+  password: '12345',
+};
+const testRegister = {
+  id: '1',
+  identification: '1037663140',
+  name: 'Alejandro',
+  lastName: 'Acevedo',
+  email: 'alejo@perez.com',
+  password: '12345',
+};
+
+const registerSucces = { message: 'Usuario creado correctamente' };
+const registerFail = { message: 'El usuario ya existe', status: 409 };
+
+const loginSucces = {
+  identification: '1037663140',
+  message: 'Bienvenido',
+  result: 'success',
+};
+const loginFail = {
+  message: 'Usuario o contraseña incorrectos',
+  result: 'fail',
+};
+
+const remove = { message: 'Usuario eliminado correctamente' };
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -11,16 +36,69 @@ describe('AuthController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [SequelizeModule.forFeature([User])],
       controllers: [AuthController],
-      providers: [AuthService],
+      providers: [
+        {
+          provide: AuthService,
+          useValue: {
+            findAll: jest.fn(() => [testRegister]),
+            create: jest.fn(() => registerSucces),
+            createFail: jest.fn(() => registerFail),
+            login: jest.fn(() => loginSucces),
+            loginFail: jest.fn(() => loginFail),
+            remove: jest.fn(() => remove),
+          },
+        },
+      ],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
     service = module.get<AuthService>(AuthService);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('root', () => {
+    it('should be defined', () => {
+      expect(controller).toBeDefined();
+    });
+
+    it('should get the users', async () => {
+      expect(await controller.findAll()).toEqual([testRegister]);
+    });
+
+    it('should create a user', async () => {
+      const result = await controller.create(testRegister);
+      expect(result).toEqual(registerSucces);
+    });
+
+    it('should login a user and return error when the credentials are incorrect', async () => {
+      try {
+        const result = await controller.login(testLogin);
+        expect(result).toEqual(loginSucces);
+      } catch (error) {
+        expect(error).toEqual(loginFail);
+        done();
+      }
+    });
+
+    it('should fail login a user', async () => {
+      try {
+        const result = await controller.login({
+          identification: '1037663148',
+          password: '12345',
+        });
+        expect(result).toEqual(loginSucces);
+      } catch (error) {
+        expect(error).toEqual(loginFail);
+        done();
+      }
+    });
+
+    it('should delete a user', async () => {
+      const result = await controller.remove('1');
+      expect(result).toEqual(remove);
+    });
   });
 });
+function done() {
+  throw new Error('Function not implemented.');
+}
