@@ -2,12 +2,10 @@ import {
   AllowNull,
   AutoIncrement,
   Column,
-  CreatedAt,
   Model,
   PrimaryKey,
   Table,
   Unique,
-  UpdatedAt,
 } from 'sequelize-typescript';
 
 @Table
