@@ -25,7 +25,7 @@ export class User extends Model {
   @Column
   name: string;
 
-  @Column
+  @Column({ field: 'last_name' })
   lastName: string;
 
   @Unique
@@ -36,10 +36,4 @@ export class User extends Model {
   @AllowNull(false)
   @Column
   password: string;
-
-  @CreatedAt
-  creationDate: Date;
-
-  @UpdatedAt
-  updatedOn: Date;
 }
