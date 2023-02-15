@@ -70,6 +70,10 @@ export class AuthService {
 
     if (!isMatch) throw new HttpException(error, HttpStatus.CONFLICT);
 
+    const updateDateOfAproval = {
+      
+    };
+
     const data = {
       identification: user.identification,
       message: 'Bienvenido',

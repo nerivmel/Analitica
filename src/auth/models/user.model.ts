@@ -1,3 +1,4 @@
+import { INTEGER } from 'sequelize';
 import {
   AllowNull,
   AutoIncrement,
@@ -34,4 +35,27 @@ export class User extends Model {
   @AllowNull(false)
   @Column
   password: string;
+
+  @Column
+  date_of_approval: Date;
+
+  @Column
+  country: String;
+
+  @Column
+  city: String;
+
+  @Column({type:INTEGER})
+  phone: number;
+
+  @Column
+  motivation: String;
+
+  @Column
+  terms: boolean;
+
+  @Column
+  enabled: boolean;
+
+
 }
