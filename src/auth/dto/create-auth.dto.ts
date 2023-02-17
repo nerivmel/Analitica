@@ -37,14 +37,16 @@ export class CreateAuthDto {
   email: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'La identificación no debe ser vacio' })
-  motivations: string;
+  @IsNotEmpty({ message: 'La motivacion no debe ser vacio' })
+  motivation: string;
 
   @IsBoolean()
+  @IsNotEmpty()
   terms: boolean;
 
-  @IsBoolean()
-  enable: boolean;
+  @IsString()
+  @IsNotEmpty({ message: 'La ocupacion no debe ser vacio' })
+  ocupation: string;
 
   @IsString()
   @IsNotEmpty({ message: 'La contraseña no debe estar vacio' })

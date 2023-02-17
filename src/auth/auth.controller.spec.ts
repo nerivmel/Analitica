@@ -20,7 +20,9 @@ const testRegister = {
   motivations: 'lorenipsdisiensllassad',
   terms:true,
   enable:true,
-  date_of_aproval: 2017-6-7
+  date_of_aproval: 2017-6-7,
+  motivation:"nada",
+  ocupation:"nada"
 
 };
 

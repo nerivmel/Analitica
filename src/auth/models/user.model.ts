@@ -57,4 +57,7 @@ export class User extends Model {
   @Column
   date_of_approval: Date;
 
+  @Column
+  ocupation: String;
+
 }
