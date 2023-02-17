@@ -33,11 +33,18 @@ export class AuthService {
     const plainToHash = await hash(password, 10);
     createAuthDto = { ...createAuthDto, password: plainToHash };
     const newUser = {
-      name: createAuthDto.name,
+      
+      type_identification: createAuthDto.type_identification,
       identification: createAuthDto.identification,
+      name: createAuthDto.name,
       lastName: createAuthDto.lastName,
-      password: createAuthDto.password,
       email: createAuthDto.email,
+      password: createAuthDto.password,
+      country: createAuthDto.country,
+      city: createAuthDto.city,
+      phone: createAuthDto.phone,
+      motivation: createAuthDto.motivations,
+
     };
     try {
       await this.userModel.create(newUser);

@@ -37,9 +37,6 @@ export class User extends Model {
   password: string;
 
   @Column
-  date_of_approval: Date;
-
-  @Column
   country: String;
 
   @Column
@@ -57,5 +54,7 @@ export class User extends Model {
   @Column
   enabled: boolean;
 
+  @Column
+  date_of_approval: Date;
 
 }
