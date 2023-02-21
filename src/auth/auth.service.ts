@@ -21,6 +21,8 @@ export class AuthService {
     const email = await this.userModel.findOne({
       where: { email: createAuthDto.email },
     });
+
+
     if (user)
       throw new HttpException('El usuario ya existe', HttpStatus.CONFLICT);
 
@@ -30,14 +32,30 @@ export class AuthService {
         HttpStatus.CONFLICT,
       );
 
+
+    
     const plainToHash = await hash(password, 10);
     createAuthDto = { ...createAuthDto, password: plainToHash };
+
+    const date_of_approval = new Date();
+
     const newUser = {
-      name: createAuthDto.name,
+      
+      type_identification: createAuthDto.type_identification,
       identification: createAuthDto.identification,
+      name: createAuthDto.name,
       lastName: createAuthDto.lastName,
-      password: createAuthDto.password,
       email: createAuthDto.email,
+      password: createAuthDto.password,
+      country: createAuthDto.country,
+      ocupation: createAuthDto.ocupation,
+      city: createAuthDto.city,
+      phone: createAuthDto.phone,
+      motivation: createAuthDto.motivation,
+      date_of_approval,
+      enabled:true,
+      terms:true
+
     };
     try {
       await this.userModel.create(newUser);
@@ -64,12 +82,31 @@ export class AuthService {
       message: 'Usuario o contraseña incorrectos',
       result: 'fail',
     };
+
+    const errorEnabled = {
+      message: 'Su cuenta caduco',
+      result: 'fail',
+    };
     if (!user) throw new HttpException(error, HttpStatus.NOT_FOUND);
 
     const isMatch = await compare(password, user.password);
 
     if (!isMatch) throw new HttpException(error, HttpStatus.CONFLICT);
 
+    if(user.enabled === false) throw new HttpException(errorEnabled, HttpStatus.CONFLICT);
+
+    const now = new Date();
+    const date = new Date(user.date_of_approval)
+    date.setDate(user.date_of_approval.getDate() + 30);
+    
+    if(now.getTime() > date.getTime()){
+
+      user.enabled = false;
+      user.save();
+      throw new HttpException(errorEnabled, HttpStatus.CONFLICT);
+
+    }
+  
     const data = {
       identification: user.identification,
       message: 'Bienvenido',
