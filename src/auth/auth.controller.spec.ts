@@ -8,7 +8,7 @@ const testLogin = {
 };
 const testRegister = {
   id: '1',
-  type_identification:'cedule',
+  type_identification: 'cedule',
   identification: '1037663140',
   name: 'Alejandro',
   lastName: 'Acevedo',
@@ -18,12 +18,11 @@ const testRegister = {
   city: 'mongolia',
   phone: 88888888,
   motivations: 'lorenipsdisiensllassad',
-  terms:true,
-  enable:true,
-  date_of_aproval: 2017-6-7,
-  motivation:"nada",
-  ocupation:"nada"
-
+  terms: true,
+  enable: true,
+  date_of_aproval: 2017 - 6 - 7,
+  motivation: 'nada',
+  ocupation: 'nada',
 };
 
 const registerSucces = { message: 'Usuario creado correctamente' };

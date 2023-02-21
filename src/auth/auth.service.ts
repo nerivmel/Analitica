@@ -22,7 +22,6 @@ export class AuthService {
       where: { email: createAuthDto.email },
     });
 
-
     if (user)
       throw new HttpException('El usuario ya existe', HttpStatus.CONFLICT);
 
@@ -32,15 +31,12 @@ export class AuthService {
         HttpStatus.CONFLICT,
       );
 
-
-    
     const plainToHash = await hash(password, 10);
     createAuthDto = { ...createAuthDto, password: plainToHash };
 
     const date_of_approval = new Date();
 
     const newUser = {
-      
       type_identification: createAuthDto.type_identification,
       identification: createAuthDto.identification,
       name: createAuthDto.name,
@@ -53,9 +49,8 @@ export class AuthService {
       phone: createAuthDto.phone,
       motivation: createAuthDto.motivation,
       date_of_approval,
-      enabled:true,
-      terms:true
-
+      enabled: true,
+      terms: true,
     };
     try {
       await this.userModel.create(newUser);
@@ -93,20 +88,19 @@ export class AuthService {
 
     if (!isMatch) throw new HttpException(error, HttpStatus.CONFLICT);
 
-    if(user.enabled === false) throw new HttpException(errorEnabled, HttpStatus.CONFLICT);
+    if (user.enabled === false)
+      throw new HttpException(errorEnabled, HttpStatus.CONFLICT);
 
     const now = new Date();
-    const date = new Date(user.date_of_approval)
+    const date = new Date(user.date_of_approval);
     date.setDate(user.date_of_approval.getDate() + 30);
-    
-    if(now.getTime() > date.getTime()){
 
+    if (now.getTime() > date.getTime()) {
       user.enabled = false;
       user.save();
       throw new HttpException(errorEnabled, HttpStatus.CONFLICT);
-
     }
-  
+
     const data = {
       identification: user.identification,
       message: 'Bienvenido',

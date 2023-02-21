@@ -37,16 +37,16 @@ export class User extends Model {
   password: string;
 
   @Column
-  country: String;
+  country: string;
 
   @Column
-  city: String;
+  city: string;
 
-  @Column({type:INTEGER})
+  @Column({ type: INTEGER })
   phone: number;
 
   @Column
-  motivation: String;
+  motivation: string;
 
   @Column
   terms: boolean;
@@ -58,6 +58,5 @@ export class User extends Model {
   date_of_approval: Date;
 
   @Column
-  ocupation: String;
-
+  ocupation: string;
 }

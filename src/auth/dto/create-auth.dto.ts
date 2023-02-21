@@ -1,6 +1,10 @@
-import { strict } from 'assert';
-import { IsBoolean, isISO8601, IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
-
+import {
+  IsBoolean,
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 
 export class CreateAuthDto {
   @IsString({ message: 'El nombre debe de ser un texto' })
@@ -28,7 +32,9 @@ export class CreateAuthDto {
   city: string;
 
   @IsNumber()
-  @IsNotEmpty({ message: 'El numero no debe ser vacio/solo debe contener numeros' })
+  @IsNotEmpty({
+    message: 'El numero no debe ser vacio/solo debe contener numeros',
+  })
   phone: number;
 
   @IsString()
@@ -51,6 +57,4 @@ export class CreateAuthDto {
   @IsString()
   @IsNotEmpty({ message: 'La contraseña no debe estar vacio' })
   password: string;
-
-
 }
