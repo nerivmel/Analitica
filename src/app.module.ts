@@ -15,11 +15,11 @@ import { auth_udearroba } from './auth_udearroba/models/auth_udearroba.model';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         dialect: 'mariadb',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password:'',
-        database: 'sigred_externos',
+        host: configService.get('DATABASE_HOST'),
+        port: configService.get('DATABASE_PORT'),
+        username: configService.get('DATABASE_USER'),
+        password: configService.get('DATABASE_PASSWORD'),
+        database: configService.get('DATABASE'),
         models: [User, auth_udearroba],
         autoLoadModels: true,
         synchronize: true,      
@@ -27,10 +27,10 @@ import { auth_udearroba } from './auth_udearroba/models/auth_udearroba.model';
     }),
     AuthModule,
     AuthUdearrobaModule,
-    /*ConfigModule.forRoot({
+    ConfigModule.forRoot({
       isGlobal: true,
-      //envFilePath: '.env',
-    }),*/
+      envFilePath: '.env',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
