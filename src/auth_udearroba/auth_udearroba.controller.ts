@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AuthUdearrobaService } from './auth_udearroba.service';
 import { CreateAuthUdearrobaDto } from './dto/create-auth_udearroba.dto';
 import { UpdateAuthUdearrobaDto } from './dto/update-auth_udearroba.dto';
@@ -24,7 +32,10 @@ export class AuthUdearrobaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthUdearrobaDto: UpdateAuthUdearrobaDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAuthUdearrobaDto: UpdateAuthUdearrobaDto,
+  ) {
     return this.authUdearrobaService.update(+id, updateAuthUdearrobaDto);
   }
 

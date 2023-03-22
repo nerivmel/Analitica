@@ -5,7 +5,7 @@ import { LoginAuthUdearrobaDto } from './dto/login-auth_udearroba.dto';
 import { auth_udearroba } from './models/auth_udearroba.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import {createHash} from 'crypto';
+import { createHash } from 'crypto';
 
 @Injectable()
 export class AuthUdearrobaService {
@@ -39,19 +39,16 @@ export class AuthUdearrobaService {
       where: { email },
     });
 
-    console.log(auth_udearroba);
-
     const error = {
       message: 'Email o contraseña incorrectos',
       result: 'fail',
     };
 
-    
     if (!auth_udearroba) throw new HttpException(error, HttpStatus.NOT_FOUND);
 
-    const passwordHash = createHash("md5").update(password).digest("hex");
+    const passwordHash = createHash('md5').update(password).digest('hex');
 
-    if(passwordHash !== auth_udearroba.password){
+    if (passwordHash !== auth_udearroba.password) {
       throw new HttpException(error, HttpStatus.CONFLICT);
     }
 
@@ -62,5 +59,4 @@ export class AuthUdearrobaService {
     };
     return data;
   }
-
 }

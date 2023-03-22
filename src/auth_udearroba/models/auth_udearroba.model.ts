@@ -1,4 +1,3 @@
-
 import {
   AllowNull,
   AutoIncrement,
@@ -9,7 +8,7 @@ import {
   Unique,
 } from 'sequelize-typescript';
 
-@Table({tableName:'auth_udearroba',updatedAt:false, createdAt:false})
+@Table({ tableName: 'auth_udearroba', updatedAt: false, createdAt: false })
 export class auth_udearroba extends Model {
   @AutoIncrement
   @PrimaryKey
@@ -20,7 +19,7 @@ export class auth_udearroba extends Model {
   @AllowNull(false)
   @Column
   documento: string;
-  
+
   @AllowNull(false)
   @Column
   nombre: string;

@@ -22,7 +22,7 @@ import { auth_udearroba } from './auth_udearroba/models/auth_udearroba.model';
         database: configService.get('DATABASE'),
         models: [User, auth_udearroba],
         autoLoadModels: true,
-        synchronize: true,      
+        synchronize: true,
       }),
     }),
     AuthModule,

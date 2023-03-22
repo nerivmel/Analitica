@@ -7,6 +7,6 @@ import { SequelizeModule } from '@nestjs/sequelize';
 @Module({
   imports: [SequelizeModule.forFeature([auth_udearroba])],
   controllers: [AuthUdearrobaController],
-  providers: [AuthUdearrobaService]
+  providers: [AuthUdearrobaService],
 })
 export class AuthUdearrobaModule {}
