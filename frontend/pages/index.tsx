@@ -13,7 +13,7 @@ export default function Home() {
           About
         </h1>
       </section>
-      {/* <section id="blog" className=" text-white h-screen bg-purple-900 flex">
+      <section id="blog" className=" text-white h-screen bg-purple-900 flex">
         <h1 className="m-auto font-waterfall text-7xl text-white font-bold">
           Blog
         </h1>
@@ -33,7 +33,7 @@ export default function Home() {
         <h1 className="m-auto font-waterfall text-7xl text-white font-bold">
           Projects
         </h1>
-      </section> */}
+      </section>
     </div>
   );
 }

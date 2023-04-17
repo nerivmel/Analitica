@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const login = () => {
 
-  const [credentials, setCredentials] = useState({ email: '', password: '' })
+  const [credentials, setCredentials] = useState({ username: '', password: '' })
 
   const handleChange = (e: any) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -18,19 +18,23 @@ const login = () => {
     headers: {'Content-Type': 'application/json'}
   });
 
-  const handleSubmit = async (e:any) => {
+
+  const handleSubmit = async (e: any) => {
+    {/*ESTO ENVÍA LOS DATOS DE LOGIN AL BACK END*/ }
     e.preventDefault();
     console.log(credentials)
-    const res = await axios.post("login", credentials );
-    console.log(res.data);
-  };
+    const res = await instance.post("auth/login/", credentials).then((res) => {
+      instance.defaults.headers.post['access_token'] = `${res.data.token_type} ${res.data.access_token}`
+    }).catch((e) => { console.log(e) });
+    console.log(instance.defaults.headers)
+  }
 
   return (
     <div>
       <NavBar/>
       <p>hola mundo</p>
       <form className="flex flex-col place-items-center gap-2" onSubmit={handleSubmit}>
-        <input name="email" type="email" placeholder="correo" onChange={handleChange}></input>
+        <input name="username" type="username" placeholder="correo" onChange={handleChange}></input>
         <input name="password" type="password" placeholder="contraseña" onChange={handleChange}></input>
         <div className='flex justify-center gap-3 m-4'>
           <button type='submit' className='primary-button'>Enviar datos</button>
