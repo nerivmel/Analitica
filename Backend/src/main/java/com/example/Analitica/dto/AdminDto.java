@@ -14,10 +14,11 @@ public class AdminDto {
 
     @Autowired
     private AdminRepository repository;
-    public void  save(Admin admin){
+    public Admin save(Admin admin){
         repository.save(admin);
+        return null;
     }
-    public List<Admin>getAllAdmins(){
+    public List<Admin> getAllAdmins(){
         List<Admin> admins = new ArrayList<>();
         Streamable.of(repository.findAll()).forEach(admins::add);
         return admins;
