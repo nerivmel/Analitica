@@ -1,11 +1,9 @@
 package com.example.Analitica.entity;
-
-        import jakarta.persistence.*;
-
-        import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "admins")
+@Table(name = "administ")
 @EntityListeners(AuditingEntityListener.class)
 public class Admin {
 
