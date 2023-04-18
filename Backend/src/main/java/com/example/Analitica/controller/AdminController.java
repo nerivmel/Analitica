@@ -5,6 +5,7 @@ import com.example.Analitica.dto.AdminDto;
 import com.example.Analitica.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,4 +20,5 @@ public class AdminController {
     public List<Admin> getAllAdmins(){
         return adminDto.getAllAdmins();
     }
+
 }
