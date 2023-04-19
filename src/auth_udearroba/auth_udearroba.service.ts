@@ -33,19 +33,14 @@ export class AuthUdearrobaService {
         'El email ingresado ya se encuentra registrado',
         HttpStatus.CONFLICT,
       );
-
-    const plainToHash = await hash(password, 10);
-    createAuthUdearrobaDto = {
-      ...createAuthUdearrobaDto,
-      password: plainToHash,
-    };
+    const passwordHash = createHash('md5').update(password).digest('hex');
 
     const newAuthUdearroba = {
       documento: createAuthUdearrobaDto.documento,
       nombre: createAuthUdearrobaDto.nombre,
       area: createAuthUdearrobaDto.area,
       email: createAuthUdearrobaDto.email,
-      password: createAuthUdearrobaDto.password,
+      password: passwordHash,
       cargo: createAuthUdearrobaDto.cargo,
     };
     try {
@@ -79,17 +74,14 @@ export class AuthUdearrobaService {
       throw new HttpException('Usuario no existe', HttpStatus.NOT_FOUND);
 
     const { password } = updateAuthUdearrobaDto;
+    let passwordHash;
     if (password) {
-      const plainToHash = await hash(password, 10);
-      updateAuthUdearrobaDto = {
-        ...updateAuthUdearrobaDto,
-        password: plainToHash,
-      };
+      passwordHash = createHash('md5').update(password).digest('hex');
     }
     const updateAuthUdearroba = {
       documento: updateAuthUdearrobaDto.documento,
       nombre: updateAuthUdearrobaDto.nombre,
-      password: updateAuthUdearrobaDto.password,
+      password: passwordHash,
       email: updateAuthUdearrobaDto.email,
       area: updateAuthUdearrobaDto.area,
       cargo: updateAuthUdearrobaDto.cargo,

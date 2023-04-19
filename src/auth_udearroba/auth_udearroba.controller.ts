@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   UseGuards,
@@ -18,22 +18,26 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 export class AuthUdearrobaController {
   constructor(private readonly authUdearrobaService: AuthUdearrobaService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createAuthUdearrobaDto: CreateAuthUdearrobaDto) {
     return this.authUdearrobaService.create(createAuthUdearrobaDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.authUdearrobaService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.authUdearrobaService.findOne(+id);
   }
 
-  @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
   update(
     @Param('id') id: string,
     @Body() updateAuthUdearrobaDto: UpdateAuthUdearrobaDto,
