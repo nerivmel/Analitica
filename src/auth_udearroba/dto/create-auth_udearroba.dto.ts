@@ -6,8 +6,8 @@ export class CreateAuthUdearrobaDto {
   nombre: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'el docuemnto no debe ser vacio' })
-  document: string;
+  @IsNotEmpty({ message: 'el documento no debe ser vacio' })
+  documento: string;
 
   @IsString()
   @IsEmail()

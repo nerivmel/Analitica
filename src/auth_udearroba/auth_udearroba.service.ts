@@ -6,31 +6,111 @@ import { auth_udearroba } from './models/auth_udearroba.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { createHash } from 'crypto';
+import { hash } from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthUdearrobaService {
   constructor(
     @InjectModel(auth_udearroba)
     private authUdearrobaModel: typeof auth_udearroba,
+    private jwtService: JwtService,
   ) {}
-  create(createAuthUdearrobaDto: CreateAuthUdearrobaDto) {
-    return 'This action adds a new authUdearroba';
+  async create(createAuthUdearrobaDto: CreateAuthUdearrobaDto) {
+    const { documento, password } = createAuthUdearrobaDto;
+    const user = await this.authUdearrobaModel.findOne({
+      where: { documento },
+    });
+    const email = await this.authUdearrobaModel.findOne({
+      where: { email: createAuthUdearrobaDto.email },
+    });
+
+    if (user)
+      throw new HttpException('El usuario ya existe', HttpStatus.CONFLICT);
+
+    if (email)
+      throw new HttpException(
+        'El email ingresado ya se encuentra registrado',
+        HttpStatus.CONFLICT,
+      );
+
+    const plainToHash = await hash(password, 10);
+    createAuthUdearrobaDto = {
+      ...createAuthUdearrobaDto,
+      password: plainToHash,
+    };
+
+    const newAuthUdearroba = {
+      documento: createAuthUdearrobaDto.documento,
+      nombre: createAuthUdearrobaDto.nombre,
+      area: createAuthUdearrobaDto.area,
+      email: createAuthUdearrobaDto.email,
+      password: createAuthUdearrobaDto.password,
+      cargo: createAuthUdearrobaDto.cargo,
+    };
+    try {
+      await this.authUdearrobaModel.create(newAuthUdearroba);
+      return { message: 'Usuario AuthUdea@ creado correctamente' };
+    } catch (error) {
+      console.log(error);
+      if (error.errors.length > 0) {
+        throw new HttpException(
+          error.errors[0].message,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      throw new HttpException(error.message, HttpStatus.CONFLICT);
+    }
   }
 
-  findAll() {
-    return `This action returns all authUdearroba`;
+  async findAll() {
+    return await this.authUdearrobaModel.findAll();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} authUdearroba`;
+    return this.authUdearrobaModel.findOne({ where: { id } });
   }
 
-  update(id: number, updateAuthUdearrobaDto: UpdateAuthUdearrobaDto) {
-    return `This action updates a #${id} authUdearroba`;
+  async update(id: number, updateAuthUdearrobaDto: UpdateAuthUdearrobaDto) {
+    const authUdearroba = await this.authUdearrobaModel.findOne({
+      where: { id },
+    });
+    if (!authUdearroba)
+      throw new HttpException('Usuario no existe', HttpStatus.NOT_FOUND);
+
+    const { password } = updateAuthUdearrobaDto;
+    if (password) {
+      const plainToHash = await hash(password, 10);
+      updateAuthUdearrobaDto = {
+        ...updateAuthUdearrobaDto,
+        password: plainToHash,
+      };
+    }
+    const updateAuthUdearroba = {
+      documento: updateAuthUdearrobaDto.documento,
+      nombre: updateAuthUdearrobaDto.nombre,
+      password: updateAuthUdearrobaDto.password,
+      email: updateAuthUdearrobaDto.email,
+      area: updateAuthUdearrobaDto.area,
+      cargo: updateAuthUdearrobaDto.cargo,
+    };
+    await authUdearroba
+      .update(updateAuthUdearroba)
+      .then(() => {
+        return { meessage: 'Usuario auth actualizado correctamente' };
+      })
+      .catch((error) => {
+        throw new HttpException(error.meessage, error.statusCode);
+      });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} authUdearroba`;
+  async remove(id: number) {
+    const user = await this.authUdearrobaModel.findOne({ where: { id } });
+    if (!user) {
+      throw new HttpException('Usuario no existe', HttpStatus.NOT_FOUND);
+    }
+    user.destroy();
+    return { message: 'Usuario eliminado correctamente' };
   }
 
   async login(loginAuthUdearrobaDto: LoginAuthUdearrobaDto) {
@@ -52,10 +132,18 @@ export class AuthUdearrobaService {
       throw new HttpException(error, HttpStatus.CONFLICT);
     }
 
-    const data = {
+    const payload = {
       nombre: auth_udearroba.nombre,
+      sub: auth_udearroba.email,
+    };
+    const token = await this.jwtService.signAsync(payload);
+
+    const data = {
       message: 'Bienvenido',
       result: 'success',
+      nombre: auth_udearroba.nombre,
+      sub: auth_udearroba.email,
+      token,
     };
     return data;
   }
