@@ -1,102 +1,103 @@
 package com.example.Analitica.entity;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Clase Encargada de generar la seguridad
- * Clase que implementa los privilegios de cada usuario
- * UserDetails es una clase propia de Spring Security
+ * Clase para la base de datos
  */
 @Entity
-@Table(name = "administ")
-@EntityListeners(AuditingEntityListener.class)
-
-public class Admin implements UserDetails{
-
+public class Admin {
+    //Id de la tabla
+    @Id
+    //Id Auto Increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idAdmin;
+    //Decorador para indicar que no puede ser null el campo
+    @NotNull
     private String nombre;
-    private String usuario;
+    @NotNull
+    @Column(unique = true)
+    private String apellidos;
+    @NotNull
+    @Column(unique = true)
     private String email;
+    @NotNull
     private String password;
 
-    // Variable que nos da la autorización (no confundir con autenticación)
-    // Coleccion de tipo generico que extendiende
-    // de GranthedAuthority de Spring security
-    private Collection<? extends GrantedAuthority> authorities;
+    @NotNull
+    //Relación many to many
+    //Un usuario puede tener MUCHOS roles y un rol puede PERTENECER a varios usuarios
+    //Tabla intermedia que tiene dos campos que va a tener idAdmin y idRol
+    @ManyToMany
+    // join columns hace referencia a la columna que hace referencia hacia esta
+    // Es decir la tabla usuario_rol va a tener un campo que se llama id_usuario
+    // inverseJoinColumns = el inverso, hace referencia a rol
+    @JoinTable(name = "admin_rol", joinColumns = @JoinColumn(name = "id_admin"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private Set<Rol> roles = new HashSet<>();
 
-    //Constructor
-    public Admin(String nombre, String usuario, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public Admin() {
+    }
+
+    //Constuctor sin Id ni Roles
+    public Admin(@NotNull String nombre,
+                   @NotNull String apellidos,
+                   @NotNull String email,
+                   @NotNull String password) {
         this.nombre = nombre;
-        this.usuario = usuario;
+        this.apellidos = apellidos;
         this.email = email;
         this.password = password;
-        this.authorities = authorities;
     }
 
-    //Metodo que asigna los privilegios (autorización)
-    public static Admin build(Admin admin){
-        //Convertimos la clase Rol a la clase GrantedAuthority
-        List<GrantedAuthority> authorities =
-                admin.getRoles()
-                        .stream()
-                        .map(rol -> new SimpleGrantedAuthority(rol.getRolName().name()))
-                        .collect(Collectors.toList());
-        return new Admin(admin.getNombre(), admin.getUsuario(), admin.getEmail(),
-                admin.getPassword(), authorities);
+    public int getIdAdmin() {
+        return idAdmin;
     }
 
-    //@Override los que tengan esta anotación
-    // significa que son metodos de UserDetails de SpringSecurity
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return usuario;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public void setIdAdmin(int idAdmin) {
+        this.idAdmin = idAdmin;
     }
 
     public String getNombre() {
         return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getAdmin() {
+        return apellidos;
+    }
+
+    public void setAdmin(String admin) {
+        this.apellidos = admin;
+    }
+
     public String getEmail() {
         return email;
     }
-}
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Rol> roles) {
+        this.roles = roles;
+    }
+}
