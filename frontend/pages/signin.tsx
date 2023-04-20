@@ -1,10 +1,12 @@
 
 import NavBar from "@/components/NavBar";
-import { useState } from "react";
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
+import { HandleSubmit } from "@/functions/handleSubmit";
 
 const signin = () => {
+  
+  
 
   const [credentials, setCredentials] = useState({ name: '', email: '', password: '' })
 
@@ -12,11 +14,10 @@ const signin = () => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
 
+  const handleSignin = new HandleSubmit(credentials)
+
   const handleSubmit = async (e:any) => {
-    e.preventDefault();
-    console.log(credentials)
-    const res = await axios.post("http://127.0.0.1:8000/user/", credentials);
-    console.log(res);
+    handleSignin.handleSignin(e)
   };
   
 
