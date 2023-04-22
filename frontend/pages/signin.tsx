@@ -23,11 +23,13 @@ const signin = () => {
   return (
     <div>
       <NavBar/>
-      <p>hola mundo</p>
-      <form className="flex flex-col place-items-center gap-2" onSubmit={handleSubmit}>
-        <input name="name" type="name" placeholder="nombre" onChange={handleChange}></input>
-        <input name="email" type="email" placeholder="correo" onChange={handleChange}></input>
-        <input name="password" type="password" placeholder="contraseña" onChange={handleChange}></input>
+      <form className="form" onSubmit={handleSubmit}>
+        <p className="p">*Nombre</p>
+        <input className="logsin-button" name="name" type="name" onChange={handleChange}></input>
+        <p className="p">*Correo</p>
+        <input className="logsin-button" name="email" type="email" onChange={handleChange}></input>
+        <p className="p">*Contraseña</p>
+        <input className="logsin-button" name="password" type="password" onChange={handleChange}></input>
         <div className='flex justify-center gap-3 m-4'>
           <button type='submit' className='primary-button'>Enviar datos</button>
           <button type='reset' className='secondary-button'>Limpiar datos</button>

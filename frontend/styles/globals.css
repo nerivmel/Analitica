@@ -17,11 +17,108 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  /*color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb));*/
+}
+
+
+.header{
+  margin: 50px auto;
+  width: 80%;
+  text-align: center;
+}
+
+.titulo-header{
+  font: bold;
+}
+
+.nav{
+  height: 50px;
+  background: white;
+}
+
+.form{
+  width: 300px;
+  margin: 0 auto;
+}
+
+.logo{
+  font-family: 'Roboto Serif';
+  font: bolder;
+  margin: 0 0 30px 0;
+  position: relative;
+  height: 210px;
+  color: white;
+  background-color: #386613;
+  font-size: 96px;
+}
+
+img{
+  position: absolute;
+  left: 20px;
+  width: 160px;
+}
+
+.tittle{
+  position: absolute;
+  left: 40%;
+  bottom: 20px;
+}
+
+.header-buttons{
+  display: flex;
+  justify-content: space-around;
+}
+
+.header-button{
+  width: 400px;
+  padding: 12px;
+  height: 100%;
+  color: white;
+  background-color: #386613;
+}
+
+.header-button:hover{
+  background-color: #7AB104;
+}
+
+.logsin-button{
+  outline: none;
+  border: 0;
+  width: 300px;
+  padding: 15px;
+  color: black;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.primary-button{
+  outline: none;
+  border: 0;
+  padding: 10px;
+  background-color: #386613;
+  border-radius: 5px;
+  color: white;
+}
+
+.primary-button:hover{
+  background-color: #7AB104;
+}
+
+.secondary-button{
+  outline: none;
+  border: 0;
+  padding: 10px;
+  background-color: #386613;
+  border-radius: 5px;
+  color: white;
+}
+
+.secondary-button:hover{
+  background-color: #7AB104;
 }

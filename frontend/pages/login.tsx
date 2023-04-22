@@ -30,12 +30,13 @@ const login = () => {
   }
 
   return (
-    <div>
+    <div className="formulario">
       <NavBar/>
-      <p>hola mundo</p>
-      <form className="flex flex-col place-items-center gap-2" onSubmit={handleSubmit}>
-        <input name="username" type="username" placeholder="correo" onChange={handleChange}></input>
-        <input name="password" type="password" placeholder="contraseña" onChange={handleChange}></input>
+      <form className="form" onSubmit={handleSubmit}>
+        <p className="p">*Correo</p>
+        <input className="logsin-button" name="username" type="username" onChange={handleChange}></input>
+        <p className="p">*Contraseña</p>
+        <input className="logsin-button" name="password" type="password" onChange={handleChange}></input>
         <div className='flex justify-center gap-3 m-4'>
           <button type='submit' className='primary-button'>Enviar datos</button>
           <button type='reset' className='secondary-button'>Limpiar datos</button>
