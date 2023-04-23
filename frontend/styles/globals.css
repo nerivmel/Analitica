@@ -48,7 +48,7 @@ body {
 }
 
 .logo{
-  font-family: 'Roboto Serif';
+  font-family: 'Roboto Serif Bold';
   font: bolder;
   margin: 0 0 30px 0;
   position: relative;
@@ -73,6 +73,7 @@ img{
 .header-buttons{
   display: flex;
   justify-content: space-around;
+  font-size: 20px;
 }
 
 .header-button{
@@ -121,4 +122,39 @@ img{
 
 .secondary-button:hover{
   background-color: #7AB104;
+}
+
+.about{
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  font-size: 18px;
+}
+
+.roles{
+  width: 35%;
+  background-color: #DDDDDD;
+  padding: 50px ;
+}
+
+.description{
+  width: 35%;
+  background-color: #DDDDDD;
+  padding: 50px;
+}
+
+.about-tittle{
+  font-size: 85px;
+  font-family: 'Times New Roman', Times, serif;
+  font: bold;
+  color: #386613;
+  flex-direction: column;
+  text-align: center;
+}
+
+.ltittle{
+  font-size: 26px;
+  font-family: 'Times New Roman', Times, serif;
+  color: #386613;
 }

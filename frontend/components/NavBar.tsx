@@ -8,7 +8,9 @@ function NavBar() {
   return (
     <div className='header'>
       <div className='logo'>
-        <Image className='img' src={imagen}/>
+        <a href="..">
+          <Image className='img' src={imagen} />
+        </a>
         <h2 className='tittle'>Analítica</h2>
       </div>
       <nav className="nav w-full bg-green-800 top-0 left-0 right-0">
@@ -21,17 +23,17 @@ function NavBar() {
             </div>
             <div className='header-button'>
               <Link href="/login" className='flex-auto'>
-                <h3 className="titulo-header">LogIn</h3>
+                <h3 className="titulo-header">Login</h3>
               </Link>
             </div>
             <div className='header-button'>
               <Link href="/signin" className='flex-auto'>
-                <h3 className="titulo-header">SignIn</h3>
+                <h3 className="titulo-header">Signin</h3>
               </Link>
             </div>
             <div className='header-button'>
               <Link href="/logout" className='flex-auto'>
-                <h3 className="titulo-header">LogOut</h3>
+                <h3 className="titulo-header">Logout</h3>
               </Link>
             </div>
             
@@ -43,3 +45,4 @@ function NavBar() {
 }
 
 export default NavBar;
+
