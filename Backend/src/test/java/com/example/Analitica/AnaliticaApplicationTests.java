@@ -31,4 +31,14 @@ class AnaliticaApplicationTests {
 		adminDto.delete(admin1.getId());
 	}
 
+	@Test
+	void createAdmin(){
+		Admin admin = new Admin();
+		admin.setFirstName("Paul");
+		admin.setPassword("paul123");
+		admin.setEmailId("paul@test.com");
+		adminDto.save(admin);
+
+	}
+
 }
