@@ -23,23 +23,11 @@ public class AdminController {
     public List<Admin> getAllAdmins(){
         return adminDto.getAllAdmins();
     }
-    /*@PostMapping("/admin")
-    public ResponseEntity<Admin> createAdmin(@RequestBody Admin newAdmin) {
-        try {
-            Admin _newAdmin = new Admin();
-            _newAdmin.setFirstName(newAdmin.getFirstName());
-            _newAdmin.setEmailId(newAdmin.getEmailId());
-            _newAdmin.setPassword(newAdmin.getPassword());
-
-            adminDto.save(newAdmin);
-            return new ResponseEntity<>(newAdmin, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
 
     @PostMapping("/admin")
     public void createAdmin(@RequestBody Admin newAdmin){
         adminDto.save(newAdmin);
     }
+
+    
 }

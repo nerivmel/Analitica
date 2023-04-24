@@ -18,6 +18,10 @@ public class AdminDto {
         repository.save(admin);
         return null;
     }
+
+    public void delete(Long adminId) {
+        repository.deleteById(adminId);
+    }
     public List<Admin> getAllAdmins(){
         List<Admin> admins = new ArrayList<>();
         Streamable.of(repository.findAll()).forEach(admins::add);
