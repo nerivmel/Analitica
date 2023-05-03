@@ -86,14 +86,8 @@ export class AuthUdearrobaService {
       area: updateAuthUdearrobaDto.area,
       cargo: updateAuthUdearrobaDto.cargo,
     };
-    await authUdearroba
-      .update(updateAuthUdearroba)
-      .then(() => {
-        return { meessage: 'Usuario auth actualizado correctamente' };
-      })
-      .catch((error) => {
-        throw new HttpException(error.meessage, error.statusCode);
-      });
+    await authUdearroba.update(updateAuthUdearroba);
+    return { message: 'Usuario Actualizado correctamente' };
   }
 
   async remove(id: number) {
