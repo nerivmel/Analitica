@@ -158,3 +158,61 @@ img{
   font-family: 'Times New Roman', Times, serif;
   color: #386613;
 }
+
+.rectangle{
+  width: 500px;
+  height: 400px;
+  background-color: #DDDDDD;
+  border-radius: 10px;
+  margin: 100px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.rec-main{
+  width: 400px;
+  height: 300px;
+  background-color: white;
+  border-radius: 10px;
+  margin: 50px auto;
+}
+
+.img1 {
+  left: 164px;
+  top: 30px;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+
+}
+
+.dropzone{
+  position: relative;
+  text-align: center;
+  width: 400px;
+  height: 300px;
+
+}
+
+.titulo-drag{
+  position: absolute;
+  top: 150px;
+  left: 110px;
+}
+
+.td{
+  position: absolute;
+  top: 190px;
+  left: 199px;
+}
+
+.tb{
+  position: absolute;
+  top: 230px;
+  left: 110px;
+  background-color: #4F7F0F;
+  color: white;
+  width: 180px;
+  height: 40px;
+  border-radius: 5px;
+}
