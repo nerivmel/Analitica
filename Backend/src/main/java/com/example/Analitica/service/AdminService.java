@@ -14,11 +14,11 @@ public class AdminService {
     AdminRepository adminRepository;
 
     public Optional<Admin> getByName(String nombreAdmin){
-        return adminRepository.findByNombreUsuario(nombreAdmin);
+        return adminRepository.findByNombre(nombreAdmin);
     }
 
     public Boolean existsByName(String nombreAdmin){
-        return adminRepository.existsByNombreUsuario(nombreAdmin);
+        return adminRepository.existsByNombre(nombreAdmin);
     }
 
     public Boolean existsByEmail(String email){
