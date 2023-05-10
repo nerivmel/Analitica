@@ -1,8 +1,8 @@
 
 import NavBar from "@/components/NavBar";
-import { useState } from "react";
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
+import { HandleSubmit } from "@/functions/handleSubmit";
 
 const login = () => {
 
@@ -12,21 +12,11 @@ const login = () => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
 
-  const instance = axios.create({
-    baseURL: 'http://127.0.0.1:8000/',
-    timeout: 1000,
-    headers: {'Content-Type': 'application/json'}
-  });
-
-
+  const handleLogin = new HandleSubmit(credentials)
+  
   const handleSubmit = async (e: any) => {
     {/*ESTO ENVÍA LOS DATOS DE LOGIN AL BACK END*/ }
-    e.preventDefault();
-    console.log(credentials)
-    const res = await instance.post("auth/login/", credentials).then((res) => {
-      instance.defaults.headers.post['access_token'] = `${res.data.token_type} ${res.data.access_token}`
-    }).catch((e) => { console.log(e) });
-    console.log(instance.defaults.headers)
+    handleLogin.handleLogin(e)
   }
 
   return (
