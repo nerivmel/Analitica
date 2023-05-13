@@ -1,10 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateAuthUdearrobaDto } from './create-auth_udearroba.dto';
+import { CreateAdminDto } from './create-admin.dto';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdateAuthUdearrobaDto extends PartialType(
-  CreateAuthUdearrobaDto,
-) {
+export class UpdateAdminDto extends PartialType(CreateAdminDto) {
   @IsString({ message: 'El nombre debe de ser un texto' })
   @IsNotEmpty({ message: 'El nombre no debe ser vacio' })
   nombre: string;

@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthUdearrobaService } from './auth_udearroba.service';
-import { CreateAuthUdearrobaDto } from './dto/create-auth_udearroba.dto';
+import { AuthUdearrobaService } from './admin.service';
+import { CreateAuthUdearrobaDto } from './dto/create-admin.dto';
 import { HttpException } from '@nestjs/common';
-import { UpdateAuthUdearrobaDto } from './dto/update-auth_udearroba.dto';
-import { LoginAuthUdearrobaDto } from './dto/login-auth_udearroba.dto';
+import { UpdateAuthUdearrobaDto } from './dto/update-admin.dto';
+import { LoginAuthUdearrobaDto } from './dto/login-admin.dto';
 
 describe('AuthUdearrobaService created successfully', () => {
   let service: AuthUdearrobaService;

@@ -8,8 +8,8 @@ import {
   Unique,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'auth_udearroba', updatedAt: false, createdAt: false })
-export class auth_udearroba extends Model {
+@Table({ tableName: 'admin', updatedAt: false, createdAt: false })
+export class admin extends Model {
   @AutoIncrement
   @PrimaryKey
   @Column

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AuthUdearrobaService } from './auth_udearroba.service';
-import { AuthUdearrobaController } from './auth_udearroba.controller';
-import { auth_udearroba } from './models/auth_udearroba.model';
+import { AdminService } from './admin.service';
+import { AdminController } from './admin.controller';
+import { admin } from './models/admin.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './jwt.constants';
@@ -14,9 +14,9 @@ import { JwtStrategy } from './jwt.strategy';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '99999s' },
     }),
-    SequelizeModule.forFeature([auth_udearroba]),
+    SequelizeModule.forFeature([admin]),
   ],
-  controllers: [AuthUdearrobaController],
-  providers: [AuthUdearrobaService, JwtStrategy],
+  controllers: [AdminController],
+  providers: [AdminService, JwtStrategy],
 })
-export class AuthUdearrobaModule {}
+export class AdminModule {}

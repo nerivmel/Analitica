@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateAuthUdearrobaDto {
+export class CreateAdminDto {
   @IsString({ message: 'El nombre debe de ser un texto' })
   @IsNotEmpty({ message: 'El nombre no debe ser vacio' })
   nombre: string;

@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthUdearrobaController } from './auth_udearroba.controller';
-import { AuthUdearrobaService } from './auth_udearroba.service';
-import { CreateAuthUdearrobaDto } from './dto/create-auth_udearroba.dto';
-import { UpdateAuthUdearrobaDto } from './dto/update-auth_udearroba.dto';
-import { LoginAuthUdearrobaDto } from './dto/login-auth_udearroba.dto';
+import { AdminController } from './admin.controller';
+import { AdminService } from './admin.service';
+import { CreateAdminDto } from './dto/create-admin.dto';
+import { UpdateAdminDto } from './dto/update-admin.dto';
+import { LoginAdminDto } from './dto/login-admin.dto';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 describe('AuthUdearrobaController', () => {
