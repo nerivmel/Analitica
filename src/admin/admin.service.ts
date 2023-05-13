@@ -45,7 +45,7 @@ export class AdminService {
     };
     try {
       await this.adminModel.create(newAdmin);
-      return { message: 'Usuario AuthUdea@ creado correctamente' };
+      return { message: 'Usuario administrador creado correctamente' };
     } catch (error) {
       console.log(error);
       if (error.errors.length > 0) {
@@ -87,16 +87,16 @@ export class AdminService {
       cargo: updateAdminDto.cargo,
     };
     await authAdmin.update(updateAdmin);
-    return { message: 'Usuario Actualizado correctamente' };
+    return { message: 'Admin Actualizado correctamente' };
   }
 
   async remove(id: number) {
     const user = await this.adminModel.findOne({ where: { id } });
     if (!user) {
-      throw new HttpException('Usuario no existe', HttpStatus.NOT_FOUND);
+      throw new HttpException('Admin no existe', HttpStatus.NOT_FOUND);
     }
     user.destroy();
-    return { message: 'Usuario eliminado correctamente' };
+    return { message: 'Admin eliminado correctamente' };
   }
 
   async login(loginAdminDto: LoginAdminDto) {

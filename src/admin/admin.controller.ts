@@ -18,7 +18,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createAdminDto: CreateAdminDto) {
     return this.adminService.create(createAdminDto);
